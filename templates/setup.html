@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" class="{{darkmode}}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/static/style.css" type="text/css">
+
+	<title>{{name}} - {% if game.config['settings']['gamename'] %} {{game.config['settings']['gamename']}} {% else %} [gamename] {% endif %} online banking </title>
+
+</head>
+
+<body>
+	<div class="app-title">
+		<h1>{% if game.config['settings']['gamename'] %} {{game.config['settings']['gamename']}} {% else %} [gamename] {% endif %} online banking</h1>
+	</div>
+	<div class="content">
+		<div class="otherusers center">
+			{{game.statistik()}}
+		</div>
+
+		<div class="banking center">
+			<form action="/setup" method="POST">
+				<div class="game">
+					<div class="game-screen">
+						<div class="game-form">
+							<div class="nachricht center">
+								{{nachricht}}
+							</div>
+							<div class="control-group">
+								<div>
+									<label class="sender-field-icon fui-user" for="gameid">gameid:</label>
+								</div>
+								<div>
+									<input type="text" class="game-field" value="{{game.gameid}}" placeholder="gameid" name="gameid" required="required" readonly="readonly">
+								</div>
+							</div>
+							<div class="control-group">
+								<div>
+									<label class="sender-field-icon fui-user" for="game-name">Spielname</label>
+								</div>
+								<div>
+									<input type="text" class="game-field" value="{% if game.config['settings']['gamename'] %} {{game.config['settings']['gamename']}} {% endif %}" placeholder="spiel-name" name="gamename" required="required">
+								</div>
+							</div>
+							<div class="control-group">
+								<div>
+									<label class="recipient-field-icon fui-user" for="recipient-name">Geldsymbol</label>
+								</div>
+								<div>
+									<input type="text" class="game-field" value="{{game.config['settings']['moneysymbol']}}" placeholder="Geldsymbol" name="moneysymbol" required="required">
+								</div>
+							</div>
+							<div class="control-group">
+								<div>
+									<label class="recipient-field-icon fui-lock" for="start-amount">Startgehalt</label>
+								</div>
+								<div>
+									<input type="number" class="game-field" value="{{game.config['settings']['defaultmoney']}}" placeholder="Startgehalt" name="defaultmoney" required="required">
+								</div>
+							</div>
+							<div class="control-group">
+								<input type="submit" value="Einstellungen speichen" class="btn btn-primary btn-large btn-block">
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div>
+				<a href="/game?gameid={{game.gameid}}"><button class = "btn btn-primary btn-large btn-block" >spiel starten</button></a>
+			</div>
+		</div>
+		<div class="settings center">
+			<h3>Benutzereinstellungen</h3>
+			<p>{{name}}</p>
+			{% if game.gameid %}
+				<p>gameid: {{game.gameid}}</p>
+			{% endif %}
+			<p><a href="/logout">logout</a></p>
+			<p><a href="/darkmode?darkmode=toggle">toggle dark mode</a></p>
+		</div>
+	</div>
+	<!--
+	<div class="transactions center">
+		<h3>letzte Transactionen</h3>
+		{% for transaction in transactions %}
+			<li>{{transaction[0]}} an {{transaction[1]}}: {{transaction[2]}} Geld</li>
+		{%endfor%}
+	</div>
+-->
+</body>
+
+</html>

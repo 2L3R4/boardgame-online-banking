@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" class="{{darkmode}}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/static/style.css" type="text/css">
+	<title>login</title>
+</head>
+
+<body>
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Login</h1>
+			</div>
+			<div class="nachricht center">
+				{{nachricht}}
+			</div>
+			<div class="login-form">
+				<form action="/login" method="POST">
+					<div class="control-group">
+						<input type="text" class="login-field" value="" placeholder="username" name="username" required="required">
+						<label class="login-field-icon fui-user" for="login-name"></label>
+					</div>
+					<div class="control-group">
+						<input type="password" class="login-field" value="" placeholder="password" name="password" required="required">
+						<label class="" for="login-pass"></label>
+					</div>
+					<div class="control-group">
+						<input type="number" class="login-field" value="" placeholder="gameid (optional)" name="gameid" >
+						<label class="" for="login-gameid"></label>
+					</div>
+					<input type="submit" value="Log in" class="btn btn-primary btn-large btn-block">
+
+			</div>
+		</div>
+	</div>
+	</form>
+</body>
+
+</html>

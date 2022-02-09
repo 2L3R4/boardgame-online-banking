@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" class="{{ darkmode }}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/static/style.css" type="text/css">
+	<title>sign up</title>
+
+</head>
+
+<body>
+	<div class="content flex-row">
+		<div class="nachricht center">
+			{{nachricht}}
+		</div>
+		<form action="?join" method="get">
+
+			<div id="join flex-row">
+				<input type="hidden" name="join" value=True>
+				<input type="text" name="gameid" placeholder="gameid" id="gameid_join">
+				<input type="submit" value="beitreten">
+			</div>
+		</form>
+		<div id="create flex-row">
+			<form action="?create" method="get">
+				<input type="hidden" name="create" value=True>
+				<input type="text" name="gameid" placeholder="gameid" id="gameid_create">
+				<input type="submit" value="erstellen">
+			</div>
+		</form>
+	</div>
+	<script>
+		function setrandom() {
+			document.getElementById("gameid_create").setAttribute("value", Math.floor(Math.random() * 9999 + 1))
+		}
+		setrandom()
+	</script>
+</body>
+
+</html>

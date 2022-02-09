@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" class="{{darkmode}}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/static/style.css" type="text/css">
+
+	<title>{{name}} - {% if game.config['settings']['gamename'] %} {{game.config['settings']['gamename']}} {% else %} [gamename] {% endif %} online banking </title>
+	<script>
+		setInterval(updateLocalState, 5000);
+		local_count = 0;
+		async function updateLocalState() {
+			const response = await fetch("/api/game/{{gameid}}/transactions?amount=4&local_count="+local_count);
+			var data = await response.json();
+
+			if (local_count < data["count"]) {
+				var transactions = data["transactions"];
+				console.log(transactions);
+				trlist = document.getElementById("transactionlist");
+				relevant_transactions = transactions.slice(-(data["count"]-local_count), transactions.length);
+				relevant_transactions.forEach(transaction => {
+					var tr_text = transaction[0] + " an " + transaction[1] + ": " + transaction[2]+ " {{game.config['settings']['moneysymbol']}}";
+					var transactionli = document.createElement("li");
+					transactionli.innerHTML = tr_text;
+					trlist.prepend(transactionli);
+				});	
+				local_count = data["count"];
+			} else {
+				console.log("no new transacions to show")
+			}
+
+		}
+	</script>
+</head>
+
+<body>
+	<div class="app-title">
+		<h1>{% if game.config['settings']['gamename'] %} {{game.config['settings']['gamename']}} {% else %} [gamename] {% endif %} online banking</h1>
+	</div>
+	<div class="content">
+		<div class="otherusers center">
+			{{game.statistik()}}
+		</div>
+
+		<div class="banking center">
+			<form action="/game" method="POST">
+				<div class="game">
+					<div class="game-screen">
+						<div class="game-form">
+							<div class="nachricht center">
+								{{nachricht}}
+							</div>
+							<div class="control-group">
+								<input type="text" class="game-field" value="{{name}}" placeholder="Sender"
+									name="sender" required="required">
+								<label class="sender-field-icon fui-user" for="sender-name"></label>
+							</div>
+							<div class="control-group">
+								<input type="text" class="game-field" value="" placeholder="Empfänger" name="reciever"
+									required="required">
+								<label class="recipient-field-icon fui-user" for="recipient-name"></label>
+							</div>
+							<div class="control-group">
+								<input type="number" class="game-field" value="" placeholder="Betrag" name="amount"
+									required="required">
+								<label class="recipient-field-icon fui-lock" for="recipient-amount"></label>
+							</div>
+							<input type="submit" value="Überweisen" class="btn btn-primary btn-large btn-block">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="settings center">
+			<h3>Benutzereinstellungen</h3>
+			<p>{{name}}</p>
+			{% if gameid %}
+				<p>gameid: {{gameid}}</p>
+			{% endif %}
+			<p><a href="/logout">logout</a></p>
+			<p><a href="/darkmode?darkmode=toggle">toggle dark mode</a></p>
+		</div>
+	</div>
+	<div class="transactions center">
+		<h3>letzte Transactionen</h3>
+		<ul id="transactionlist">
+			{% for transaction in game._gettransactionlist() %}
+			<li>{{transaction[0]}} an {{transaction[1]}}: {{transaction[2]}} {{game.config['settings']['moneysymbol']}}</li>
+			{%endfor%}
+		</ul>
+	</div>
+</body>
+
+</html>

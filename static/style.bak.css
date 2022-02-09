@@ -1,0 +1,62 @@
+/* @media screen and (min-width: 1000px) { */
+body {
+    background-color: #222;
+    color: white;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 15% 25% 25% 25%;
+    grid-template-areas: 
+        "title title title title"
+        "settings settings settings settings"
+        "banking banking banking banking"
+        "0 otherusers otherusers 1"
+    ;
+}
+
+
+@media screen and (min-width: 1300px ) {
+    .content {
+        grid-template-areas: 
+            "title    title   title  title"
+            "settings banking banking otherusers"   
+            "settings banking banking otherusers"   
+            "settings banking banking otherusers"   
+        ;
+    }
+    body {
+        background-color: white;
+        color: black;
+    }
+}
+
+.app-title {
+    grid-area: title;
+}
+
+.settings {
+    align-self: center;
+    text-align: center;
+    grid-area: settings;
+}
+
+.banking {
+    align-self: center;
+    text-align: center;
+    grid-area: banking;
+}
+.otherusers {
+    align-self: center;
+    text-align: center;
+    grid-area: otherusers;
+}
+.otherusers table * {
+    align-self: center;
+    text-align: center;
+}
